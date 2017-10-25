@@ -1,0 +1,12 @@
+{
+    "name": "wakeonweb/service-bus-bundle",
+    "type": "project",
+    "autoload": {
+        "psr-4": { "WakeOnWeb\\ServiceBusBundle\\": "src/" }
+    },
+    "require": {
+        "php": ">=5.5.9",
+        "prooph/service-bus-symfony-bundle": "~1.0"
+    },
+    "minimum-stability": "dev"
+}
