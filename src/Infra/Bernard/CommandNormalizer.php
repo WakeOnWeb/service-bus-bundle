@@ -56,7 +56,7 @@ class CommandNormalizer implements NormalizerInterface, DenormalizerInterface, S
             return true;
         }
 
-        return $object instanceof Envelelope && $object->getMessage() instanceof CommandMessage;
+        return $object instanceof Envelope && $object->getMessage() instanceof CommandMessage;
     }
 
     public function setSerializer(SerializerInterface $serializer)
