@@ -23,7 +23,7 @@ class Producer implements MessageProducer
 
     public function __invoke(Message $message, Deferred $deferred = null): void
     {
-        $message = new CommandMessage($this->queueName, $message);
+        $message = new MessageEnvelope($this->queueName, $message);
 
         if ($this->logger) {
             $this->logger->debug(sprintf('[BERNARD PUBLISHER] Publishing to target %s, message : %s', $this->queueName, serialize($message)));

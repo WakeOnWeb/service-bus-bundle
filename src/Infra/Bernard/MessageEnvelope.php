@@ -3,22 +3,22 @@
 namespace WakeOnWeb\ServiceBusBundle\Infra\Bernard;
 
 use Bernard\Message;
-use Prooph\Common\Messaging\Message as Command;
+use Prooph\Common\Messaging\Message as ProophMessage;
 
 /**
- * Contains a prooph command.
+ * Contains a prooph message.
  * serialized/deserialized to works with queue.
- * useful internally because command code has to be the same
+ * useful internally because message code has to be the same
  * in producer/consumer app.
  *
  * @author Stephane PY <s.py@wakeonweb.com>
  */
-class CommandMessage implements Message
+class MessageEnvelope implements Message
 {
-    public function __construct($name, Command $command)
+    public function __construct($name, ProophMessage $message)
     {
         $this->name = $name;
-        $this->command = $command;
+        $this->message = $message;
     }
 
     public function getName()
@@ -26,16 +26,16 @@ class CommandMessage implements Message
         return $this->name;
     }
 
-    public function getCommand()
+    public function getMessage()
     {
-        return $this->command;
+        return $this->message;
     }
 
     public function toArray()
     {
         return [
             'name' => $this->name,
-            'command' => serialize($this->command)
+            'message' => serialize($this->message)
         ];
     }
 }

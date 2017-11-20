@@ -2,19 +2,19 @@
 
 namespace WakeOnWeb\ServiceBusBundle\Infra\Bernard;
 
-use Prooph\ServiceBus\CommandBus;
+use Prooph\ServiceBus\MessageBus;
 
 class Receiver
 {
-    private $commandBus;
+    private $messageBus;
 
-    public function __construct(CommandBus $commandBus)
+    public function __construct(MessageBus $messageBus)
     {
-        $this->commandBus = $commandBus;
+        $this->messageBus = $messageBus;
     }
 
-    public function __invoke(CommandMessage $message)
+    public function __invoke(MessageEnvelope $message)
     {
-        $this->commandBus->dispatch($message->getCommand());
+        $this->messageBus->dispatch($message->getMessage());
     }
 }

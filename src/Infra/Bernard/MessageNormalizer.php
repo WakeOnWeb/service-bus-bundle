@@ -10,14 +10,14 @@ use Bernard\Envelope;
 use UnexpectedValueException;
 
 /**
- * Serialize/Deserialize prooph commands to communicate via rabbitmq.
+ * Serialize/Deserialize prooph messages to communicate via rabbitmq.
  *
  * @uses NormalizerInterface
  * @uses DenormalizerInterface
  * @uses SerializerAwareInterface
  * @author Stephane PY <s.py@wakeonweb.com>
  */
-class CommandNormalizer implements NormalizerInterface, DenormalizerInterface, SerializerAwareInterface
+class MessageNormalizer implements NormalizerInterface, DenormalizerInterface, SerializerAwareInterface
 {
     private $serializer;
 
@@ -33,16 +33,16 @@ class CommandNormalizer implements NormalizerInterface, DenormalizerInterface, S
 
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof CommandMessage) {
+        if ($data instanceof MessageEnvelope) {
             return true;
         }
 
-        return $data instanceof Envelope && $data->getMessage() instanceof CommandMessage;
+        return $data instanceof Envelope && $data->getMessage() instanceof MessageEnvelope;
     }
 
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== Envelope::class && $type !== CommandMessage::class) {
+        if ($type !== Envelope::class && $type !== MessageEnvelope::class) {
             return false;
         }
 
@@ -52,11 +52,11 @@ class CommandNormalizer implements NormalizerInterface, DenormalizerInterface, S
             return false;
         }
 
-        if ($object instanceof CommandMessage) {
+        if ($object instanceof MessageEnvelope) {
             return true;
         }
 
-        return $object instanceof Envelope && $object->getMessage() instanceof CommandMessage;
+        return $object instanceof Envelope && $object->getMessage() instanceof MessageEnvelope;
     }
 
     public function setSerializer(SerializerInterface $serializer)
