@@ -46,7 +46,7 @@ class MessageNormalizer implements NormalizerInterface, DenormalizerInterface, S
             return false;
         }
 
-        $object = unserialize($data);
+        $object = @unserialize($data);
 
         if (false === is_object($object)) {
             return false;
