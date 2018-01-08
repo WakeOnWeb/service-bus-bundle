@@ -10,13 +10,9 @@ Add packages to `composer.json`
 
 ```
     "require": {
-        "wakeonweb/service-bus-bundle": "dev-master",
+        "wakeonweb/service-bus-bundle": "^0.2.1",
         ..
-    },
-    "repositories": [
-        { "type":"vcs", "url":"git@bitbucket.org:wakeonweb/service-bus-bundle.git" },
-        ...
-    ]
+    }
 ```
 
 Register bundles in `AppKernel.php`
