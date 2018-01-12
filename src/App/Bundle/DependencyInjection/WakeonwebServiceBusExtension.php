@@ -52,6 +52,7 @@ class WakeonwebServiceBusExtension extends Extension
                     new Reference(sprintf('prooph_service_bus.%s', $options['receiver_bus']))
                 ]);
                 $definition->addTag('bernard.receiver', ['message' => $options['queue_name']]);
+                $definition->setPublic(true);
 
                 $container->setDefinition(sprintf('wakeonweb.service_bus.%s.receiver', $name), $definition);
             }
