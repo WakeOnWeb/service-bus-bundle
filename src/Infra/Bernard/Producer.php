@@ -4,9 +4,10 @@ namespace WakeOnWeb\ServiceBusBundle\Infra\Bernard;
 
 use Bernard\Producer as BernardProducer;
 use Psr\Log\LoggerInterface;
-use Prooph\Common\Messaging\Message;
 use Prooph\ServiceBus\Async\MessageProducer;
 use React\Promise\Deferred;
+use Bernard\Message\PlainMessage;
+use Prooph\Common\Messaging\Message;
 
 class Producer implements MessageProducer
 {
@@ -23,12 +24,14 @@ class Producer implements MessageProducer
 
     public function __invoke(Message $message, Deferred $deferred = null): void
     {
-        $message = new MessageEnvelope($this->queueName, $message);
-
         if ($this->logger) {
             $this->logger->debug(sprintf('[BERNARD PUBLISHER] Publishing to target %s, message : %s', $this->queueName, serialize($message)));
         }
 
-        $this->producer->produce($message, $this->queueName);
+        if (false === method_exists($message, 'toArray')) {
+            throw new \InvalidArgumentException("Message should have a toArray method, inherits from DomainMessage to easily implement it.");
+        }
+
+        $this->producer->produce(new PlainMessage($this->queueName, $message->toArray()), $this->queueName);
     }
 }

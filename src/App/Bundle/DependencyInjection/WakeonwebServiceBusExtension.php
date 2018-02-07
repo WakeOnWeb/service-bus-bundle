@@ -25,7 +25,6 @@ class WakeonwebServiceBusExtension extends Extension
         $config = $processor->processConfiguration(new Configuration(), $configs);
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config/services'));
-        $loader->load('bernard.xml');
         $loader->load('guesser.xml');
 
         if (array_key_exists('command_buses', $config)) {
@@ -49,7 +48,8 @@ class WakeonwebServiceBusExtension extends Extension
 
             if ($options['receiver_bus']) {
                 $definition = new Definition(Receiver::class, [
-                    new Reference(sprintf('prooph_service_bus.%s', $options['receiver_bus']))
+                    new Reference(sprintf('prooph_service_bus.%s', $options['receiver_bus'])),
+                    new Reference(sprintf('prooph_service_bus.message_factory.%s', $options['receiver_bus']))
                 ]);
                 $definition->addTag('bernard.receiver', ['message' => $options['queue_name']]);
                 $definition->setPublic(true);
