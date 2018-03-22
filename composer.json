@@ -1,5 +1,5 @@
 {
-    "name": "thecamp/service-bus-bundle",
+    "name": "wakeonweb/service-bus-bundle",
     "type": "project",
     "autoload": {
         "psr-4": { "WakeOnWeb\\ServiceBusBundle\\": "src/" }
