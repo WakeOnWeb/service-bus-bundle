@@ -31,7 +31,10 @@ class WakeonwebServiceBusExtension extends Extension
             $commandBusConfig = $config['command_buses'];
 
             if (array_key_exists('default', $commandBusConfig)) {
-                $container->setAlias('wakeonweb.service_bus.command_bus_default', sprintf('prooph_service_bus.%s', $commandBusConfig['default']));
+                $container
+                    ->setAlias('wakeonweb.service_bus.command_bus_default', sprintf('prooph_service_bus.%s', $commandBusConfig['default']))
+                    ->setPublic(true)
+                ;
             }
 
             $container->getDefinition('wakeonweb.service_bus.command_bus_guesser')->replaceArgument(0, $commandBusConfig['route_message_to_bus']);
